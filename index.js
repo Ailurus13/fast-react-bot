@@ -1,26 +1,21 @@
 const Discord = require("discord.js");
-
 const client = new Discord.Client();
-
 const config = require("./config.json");
 
+const unicodeAlphabet = require("./unicode-alphabet");
+const defaultReact = require("./default-react");
+
 client.on("ready", () => {
-  console.log(
-    `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
-  );
-  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
+  console.log(`Bot has started on ${client.guilds.cache.size} guilds.`);
+  client.user.setActivity(`!fr help`);
 });
 
 client.on("guildCreate", (guild) => {
-  console.log(
-    `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
-  );
-  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
+  console.log(`Joined guild ${guild.id}`);
 });
 
 client.on("guildDelete", (guild) => {
-  console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-  client.user.setActivity(`Serving ${client.guilds.cache.size} servers`);
+  console.log(`Removed from ${guild.id}`);
 });
 
 client.on("message", async (message) => {
@@ -30,32 +25,30 @@ client.on("message", async (message) => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  // Ajout rapide de réactions
-  const reactionsCommand = [
-    { name: "love", emojis: ["🥰", "❤️", "💟", "💗", "💘", "💖"] },
-    { name: "cul", emojis: ["🍑"] },
-  ];
-  const reaction = reactionsCommand.find((c) => c.name === command);
-  if (reaction) {
-    const messages = await message.channel.messages.fetch({ limit: 2 });
-    message.delete();
-    const lastMessage = messages.last();
-    reaction.emojis.forEach((e) => {
-      lastMessage.react(e);
-    });
+  // Affiche la liste des commandes
+  if (command === "help") {
+    //TODO
   }
 
   // Ecriture d'un mot en réaction
-  const abc = {
-    c: "🇨",
-  };
   if (command === "write") {
     const messages = await message.channel.messages.fetch({ limit: 2 });
     message.delete();
     const lastMessage = messages.last();
     const mot = args[0];
-    console.log(mot);
-    console.log(lastMessage);
+    for (const c of mot) {
+      lastMessage.react(unicodeAlphabet[c]);
+    }
+  }
+  // Ajout rapide de réactions
+  const reaction = defaultReact.find((c) => c.name === command);
+  if (reaction) {
+    const messages = await message.channel.messages.fetch({ limit: 2 });
+    message.delete();
+    const lastMessage = messages.last();
+    for (const e of reaction.emojis) {
+      await lastMessage.react(e);
+    }
   }
 });
 
