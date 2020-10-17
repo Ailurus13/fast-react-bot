@@ -1,6 +1,6 @@
+require('dotenv').config()
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const config = require("./config.json");
 
 const commandHandler = require("./command/commandHandler");
 
@@ -22,9 +22,9 @@ client.on("message", async (message) => {
   if (message.author.bot) return;
 
   // Ignore message not starting with prefix
-  if (!message.content.startsWith(config.prefix)) return;
+  if (!message.content.startsWith(process.env.PREFIX)) return;
 
   commandHandler(message);
 });
 
-client.login(config.token);
+client.login(process.env.TOKEN);

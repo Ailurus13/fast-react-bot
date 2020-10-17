@@ -1,7 +1,6 @@
 "use strict";
 
 const { commands } = require("../commandList");
-const config = require("../../config.json");
 
 const info = {
   name: "Help",
@@ -15,7 +14,7 @@ const action = (message) => {
   const helpText = fullCommands
     .map(
       (c) =>
-        `${config.prefix} ${c.info.command} : ${c.info.name} - ${
+        `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${
           c.info.description
         } (${c.info.args || "none"})`
     )

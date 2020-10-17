@@ -1,7 +1,6 @@
 "use strict";
 
 const { commands, defaultCommand } = require("./commandList");
-const config = require("../config.json");
 
 const help = require("./help/help");
 
@@ -15,7 +14,7 @@ commandsAction[help.info.command] = help.action;
 
 module.exports = (message) => {
   // Get args and command name
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   // Get the action from command name
   const action = commandsAction[command];
