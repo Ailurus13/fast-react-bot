@@ -2,8 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 
-const unicodeAlphabet = require("./unicode-alphabet");
-const defaultReact = require("./default-react");
+const commandHandler = require("./command/commandHandler");
 
 client.on("ready", () => {
   console.log(`Bot has started on ${client.guilds.cache.size} guilds.`);
@@ -19,37 +18,13 @@ client.on("guildDelete", (guild) => {
 });
 
 client.on("message", async (message) => {
+  // Avoid bot responding to each others
   if (message.author.bot) return;
 
+  // Ignore message not starting with prefix
   if (!message.content.startsWith(config.prefix)) return;
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
 
-  // Affiche la liste des commandes
-  if (command === "help") {
-    //TODO
-  }
-
-  // Ecriture d'un mot en réaction
-  if (command === "write") {
-    const messages = await message.channel.messages.fetch({ limit: 2 });
-    message.delete();
-    const lastMessage = messages.last();
-    const mot = args[0];
-    for (const c of mot) {
-      lastMessage.react(unicodeAlphabet[c]);
-    }
-  }
-  // Ajout rapide de réactions
-  const reaction = defaultReact.find((c) => c.name === command);
-  if (reaction) {
-    const messages = await message.channel.messages.fetch({ limit: 2 });
-    message.delete();
-    const lastMessage = messages.last();
-    for (const e of reaction.emojis) {
-      await lastMessage.react(e);
-    }
-  }
+  commandHandler(message);
 });
 
 client.login(config.token);
