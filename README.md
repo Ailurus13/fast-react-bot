@@ -1,8 +1,11 @@
 # Fast-React
+
+Discord bot to react quickly to messages
+
 ## Install
 
-Install dependencies using  
-   
+Install dependencies using
+
     npm install
 
 Create a .env file at the root of the project
@@ -17,4 +20,5 @@ Run the bot using
     npm start
 
 ## Author
+
 COUTURIER Tristan

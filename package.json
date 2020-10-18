@@ -1,7 +1,7 @@
 {
   "name": "fast-react",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord bot to react quickly to messages",
   "main": "index.js",
   "engines": {
     "node": ">=12.0.0"
