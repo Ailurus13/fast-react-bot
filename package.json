@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ."
   },
-  "author": "",
+  "author": "COUTURIER Tristan",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.3.1",
