@@ -3,9 +3,10 @@
 const write = require("./write/write");
 const clean = require("./clean/clean");
 const react = require("./react/react");
+const create = require('./create/create');
 
 // Commands
-const commands = [write, clean, react];
+const commands = [write, clean, react, create];
 const defaultCommand = react;
 
 // Register commands if they are compliant
