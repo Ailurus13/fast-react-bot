@@ -1,5 +1,7 @@
 "use strict";
 
+const { addShortcut } = require("../../lib/shortcuts");
+
 const info = {
   name: "Create",
   command: "create",
@@ -8,6 +10,11 @@ const info = {
 };
 
 const action = async (message, args) => {
+  const name = args[0];
+  if (!name) {
+    message.channel.send("Error: No name provided");
+    return;
+  }
   const formMessage = await message.channel.send(
     "React with the emojies you would like to add to your shortcut"
   );
@@ -19,12 +26,15 @@ const action = async (message, args) => {
       },
       { time: 60000 }
     );
-    const emojies = collected
+    const emojis = collected
       .array()
       .map((messageReaction) => messageReaction.emoji.name);
-    // TODO: Add to a dynamic file
-    // TODO: Read the into the dynamic file for the react command
-    await message.channel.send("Shortcut created !");
+    if (emojis.length <= 0) {
+      message.channel.send("Error: No emoji provided");
+      return;
+    }
+    addShortcut(name, emojis);
+    await message.channel.send(`Shortcut created with name : ${name}`);
   } catch (e) {
     await message.channel.send(`Error while creating your shortcut ! (${e})`);
   }
