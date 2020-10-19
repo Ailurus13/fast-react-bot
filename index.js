@@ -6,7 +6,7 @@ const commandHandler = require("./command/commandHandler");
 
 client.on("ready", () => {
   console.log(`Bot has started on ${client.guilds.cache.size} guilds.`);
-  client.user.setActivity(`!fr help`);
+  client.user.setActivity(`${process.env.PREFIX} help`);
 });
 
 client.on("guildCreate", (guild) => {
