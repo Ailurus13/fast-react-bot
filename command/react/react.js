@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-const defaultReact = require("./default-react");
-const shortcuts = require("../../lib/shortcuts");
+const defaultReact = require('./default-react');
+const shortcuts = require('../../lib/shortcuts');
 
 const info = {
-  name: "React",
-  command: "react",
-  args: "type *",
-  description: "Add reactions to channel last message based on a selected type",
+  name: 'React',
+  command: 'react',
+  args: 'type *',
+  description: 'Add reactions to channel last message based on a selected type'
 };
 
 const action = async (message, args) => {
@@ -27,5 +27,5 @@ const action = async (message, args) => {
 
 module.exports = {
   info,
-  action,
+  action
 };

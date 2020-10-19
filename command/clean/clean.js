@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 const info = {
-  name: "Clean",
-  command: "clean",
-  args: "messageId",
-  description: "Remove all reactions from a message",
+  name: 'Clean',
+  command: 'clean',
+  args: 'messageId',
+  description: 'Remove all reactions from a message'
 };
 
 const action = async (message, args) => {
@@ -27,5 +27,5 @@ const action = async (message, args) => {
 
 module.exports = {
   info,
-  action,
+  action
 };
