@@ -1,5 +1,7 @@
 'use strict';
 
+const { tryDelete } = require("../../lib/discordjs-utils");
+
 const info = {
   name: 'Clean',
   command: 'clean',
@@ -11,7 +13,7 @@ const action = async (message, args) => {
   const idMessage = args[0];
   if (!idMessage) {
     const messages = await message.channel.messages.fetch({ limit: 2 });
-    message.delete();
+    tryDelete(message);
     const lastMessage = messages.last();
     lastMessage.reactions.removeAll();
   } else {
@@ -21,7 +23,7 @@ const action = async (message, args) => {
     } catch (e) {
       console.log(`No message found with id ${idMessage}`);
     }
-    message.delete();
+    tryDelete(message);
   }
 };
 
