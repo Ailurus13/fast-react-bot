@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-const { commands } = require("../commandList");
+const { commands } = require('../commandList');
 
 const info = {
-  name: "Help",
-  command: "help",
+  name: 'Help',
+  command: 'help',
   args: null,
-  description: "Give informations about all commands",
+  description: 'Give informations about all commands'
 };
 
 const action = (message) => {
@@ -16,13 +16,13 @@ const action = (message) => {
       (c) =>
         `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${
           c.info.description
-        } (${c.info.args || "none"})`
+        } (${c.info.args || 'none'})`
     )
-    .join("\n");
-  message.channel.send("```" + helpText + "```");
+    .join('\n');
+  message.channel.send('```' + helpText + '```');
 };
 
 module.exports = {
   info,
-  action,
+  action
 };

@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-const unicodeAlphabet = require("./unicode-alphabet");
+const unicodeAlphabet = require('./unicode-alphabet');
 
 const info = {
-  name: "Write",
-  command: "write",
-  args: "word *",
-  description: "Write a word using reactions on current channel last message",
+  name: 'Write',
+  command: 'write',
+  args: 'word *',
+  description: 'Write a word using reactions on current channel last message'
 };
 
 const action = async (message, args) => {
@@ -21,5 +21,5 @@ const action = async (message, args) => {
 
 module.exports = {
   info,
-  action,
+  action
 };
