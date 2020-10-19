@@ -9,17 +9,18 @@ const info = {
   description: 'Give informations about all commands'
 };
 
-const action = (message) => {
+const action = async (message) => {
   const fullCommands = [{ info }, ...commands];
   const helpText = fullCommands
     .map(
       (c) =>
-        `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${
-          c.info.description
-        } (${c.info.args || 'none'})`
+        `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${c.info.description} 
+        (${c.info.args || "none"})`
     )
-    .join('\n');
-  message.channel.send('```' + helpText + '```');
+    .join("\n");
+  const dm = await message.author.createDM();
+  dm.send("```" + helpText + "```");
+  message.delete();
 };
 
 module.exports = {
