@@ -23,7 +23,7 @@ const action = async (message, args) => {
     'React with the emojies you would like to add to your shortcut'
   );
   tryDelete(message);
-  
+
   // Récupération des emotes (60 secondes pour le faire)
   try {
     const collected = await formMessage.awaitReactions(
