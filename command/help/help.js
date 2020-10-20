@@ -15,11 +15,11 @@ const action = async (message) => {
     .map(
       (c) =>
         `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${c.info.description} 
-        (${c.info.args || "none"})`
+        (${c.info.args || 'none'})`
     )
-    .join("\n");
+    .join('\n');
   const dm = await message.author.createDM();
-  dm.send("```" + helpText + "```");
+  dm.send('```' + helpText + '```');
   message.delete();
 };
 
