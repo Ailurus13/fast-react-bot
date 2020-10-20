@@ -1,28 +1,30 @@
-"use strict";
+'use strict';
 
-const { commands } = require("../commandList");
+const { tryDelete } = require('../../lib/discordjs-utils');
+const { commands } = require('../commandList');
 
 const info = {
-  name: "Help",
-  command: "help",
+  name: 'Help',
+  command: 'help',
   args: null,
-  description: "Give informations about all commands",
+  description: 'Give informations about all commands'
 };
 
-const action = (message) => {
+const action = async (message) => {
   const fullCommands = [{ info }, ...commands];
   const helpText = fullCommands
     .map(
       (c) =>
-        `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${
-          c.info.description
-        } (${c.info.args || "none"})`
+        `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${c.info.description} 
+        (${c.info.args || "none"})`
     )
     .join("\n");
-  message.channel.send("```" + helpText + "```");
+  const dm = await message.author.createDM();
+  dm.send("```" + helpText + "```");
+  tryDelete(message);
 };
 
 module.exports = {
   info,
-  action,
+  action
 };

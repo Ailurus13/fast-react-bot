@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const { commands, defaultCommand } = require("./commandList");
+const { commands, defaultCommand } = require('./commandList');
 
-const help = require("./help/help");
+const help = require('./help/help');
 
 // Init commands that are compliants
 const commandsAction = {};
@@ -28,7 +28,7 @@ module.exports = (message) => {
       // Args of default action is the command name
       defaultAction(message, [command]);
     } else {
-      console.log(`No default action implemented`);
+      console.log('No default action implemented');
     }
   }
 };
