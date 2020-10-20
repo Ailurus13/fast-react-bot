@@ -14,15 +14,15 @@ const action = async (message, args) => {
   const name = args[0];
   const dm = await message.author.createDM();
   if (!name) {
-    dm.send("Error: No name provided");
+    dm.send('Error: No name provided');
     return;
   }
 
   const formMessage = await dm.send(
-    "React with the emojies you would like to add to your shortcut"
+    'React with the emojies you would like to add to your shortcut'
   );
   tryDelete(message);
-  
+
   // Récupération des emotes (60 secondes pour le faire)
   try {
     const collected = await formMessage.awaitReactions(
@@ -35,7 +35,7 @@ const action = async (message, args) => {
       .array()
       .map((messageReaction) => messageReaction.emoji.name);
     if (emojis.length <= 0) {
-      dm.send("Error: No emoji provided");
+      dm.send('Error: No emoji provided');
       return;
     }
     addShortcut(name, emojis);

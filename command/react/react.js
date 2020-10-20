@@ -4,7 +4,6 @@ const defaultReact = require('./default-react');
 const shortcuts = require('../../lib/shortcuts');
 const { tryDelete } = require('../../lib/discordjs-utils');
 
-
 const info = {
   name: 'React',
   command: 'react',

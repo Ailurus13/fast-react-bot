@@ -1,6 +1,6 @@
 'use strict';
 
-const { tryDelete } = require("../../lib/discordjs-utils");
+const { tryDelete } = require('../../lib/discordjs-utils');
 
 const info = {
   name: 'Clean',
