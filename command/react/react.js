@@ -12,10 +12,9 @@ const info = {
 
 const action = async (message, args) => {
   const type = args[0];
-  const id = message.author.id;
   // Merge default shortcuts with custom shortcuts
-  const allShortcuts = [...defaultReact, ...shortcuts.getShortcuts()];
-  const reaction = allShortcuts.find((c) => c.name === type && c.userId === id);
+  const allShortcuts = [...defaultReact, ...shortcuts.getShortcuts(message.author.id)];
+  const reaction = allShortcuts.find((c) => c.name === type);
   if (reaction) {
     const messages = await message.channel.messages.fetch({ limit: 2 });
     message.delete();
