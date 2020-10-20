@@ -11,13 +11,16 @@ const info = {
 
 const action = async (message, args) => {
   const name = args[0];
+  const dm = await message.author.createDM();
   if (!name) {
-    message.channel.send('Error: No name provided');
+    dm.send("Error: No name provided");
     return;
   }
-  const formMessage = await message.channel.send(
-    'React with the emojies you would like to add to your shortcut'
+
+  const formMessage = await dm.send(
+    "React with the emojies you would like to add to your shortcut"
   );
+    message.delete();
   // Récupération des emotes (60 secondes pour le faire)
   try {
     const collected = await formMessage.awaitReactions(
@@ -30,13 +33,13 @@ const action = async (message, args) => {
       .array()
       .map((messageReaction) => messageReaction.emoji.name);
     if (emojis.length <= 0) {
-      message.channel.send('Error: No emoji provided');
+      dm.send("Error: No emoji provided");
       return;
     }
     addShortcut(name, emojis);
-    await message.channel.send(`Shortcut created with name : ${name}`);
+    await dm.send(`Shortcut created with name : ${name}`);
   } catch (e) {
-    await message.channel.send(`Error while creating your shortcut ! (${e})`);
+    await dm.send(`Error while creating your shortcut ! (${e})`);
   }
 };
 
