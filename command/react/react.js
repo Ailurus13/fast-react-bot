@@ -2,6 +2,8 @@
 
 const defaultReact = require('./default-react');
 const shortcuts = require('../../lib/shortcuts');
+const { tryDelete } = require('../../lib/discordjs-utils');
+
 
 const info = {
   name: 'React',
@@ -17,7 +19,7 @@ const action = async (message, args) => {
   const reaction = allShortcuts.find((c) => c.name === type);
   if (reaction) {
     const messages = await message.channel.messages.fetch({ limit: 2 });
-    message.delete();
+    tryDelete(message);
     const lastMessage = messages.last();
     for (const e of reaction.emojis) {
       await lastMessage.react(e);
