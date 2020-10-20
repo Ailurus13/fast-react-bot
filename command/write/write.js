@@ -1,5 +1,6 @@
 'use strict';
 
+const { tryDelete } = require('../../lib/discordjs-utils');
 const unicodeAlphabet = require('./unicode-alphabet');
 
 const info = {
@@ -11,7 +12,7 @@ const info = {
 
 const action = async (message, args) => {
   const messages = await message.channel.messages.fetch({ limit: 2 });
-  message.delete();
+  tryDelete(message);
   const lastMessage = messages.last();
   const mot = args[0];
   for (const c of mot) {

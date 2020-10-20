@@ -1,5 +1,6 @@
 'use strict';
 
+const { tryDelete } = require('../../lib/discordjs-utils');
 const { addShortcut } = require('../../lib/shortcuts');
 
 const info = {
@@ -21,7 +22,8 @@ const action = async (message, args) => {
   const formMessage = await dm.send(
     'React with the emojies you would like to add to your shortcut'
   );
-  message.delete();
+  tryDelete(message);
+  
   // Récupération des emotes (60 secondes pour le faire)
   try {
     const collected = await formMessage.awaitReactions(
