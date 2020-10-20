@@ -19,6 +19,11 @@ Run the bot using
 
     npm start
 
-## Author
+## Contribute 
 
-COUTURIER Tristan
+The project follow gitmoji guide : https://gitmoji.carloscuesta.me/
+
+## Authors
+
+- COUTURIER Tristan  
+- BRICAUD Dorian
