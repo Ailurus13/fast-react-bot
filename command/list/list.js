@@ -18,7 +18,7 @@ const action = async (message) => {
       // Can't use markdown for style, it does not handle emojis very good
       message.channel.send('[' + author.username + ']\n' + stringShortcut);
     } else {
-      message.channel.send('Your shortcuts list is now empty.');
+      message.channel.send(`Your shortcuts list is now empty.\nUse _${process.env.PREFIX} create_ to create a shortcut !`);
     }
   } catch (e) {
     message.channel.send(
