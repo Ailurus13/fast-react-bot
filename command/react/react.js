@@ -1,6 +1,5 @@
 'use strict';
 
-const defaultReact = require('./default-react');
 const shortcuts = require('../../lib/shortcuts');
 const { tryDelete } = require('../../lib/discordjs-utils');
 
@@ -13,9 +12,7 @@ const info = {
 
 const action = async (message, args) => {
   const type = args[0];
-  // Merge default shortcuts with custom shortcuts
-  const allShortcuts = [...defaultReact, ...shortcuts.getAllByUser(message.author.id)];
-  const reaction = allShortcuts.find((c) => c.name === type);
+  const reaction = shortcuts.getShortcut(message.author.id, type);
   if (reaction) {
     const messages = await message.channel.messages.fetch({ limit: 2 });
     tryDelete(message);
