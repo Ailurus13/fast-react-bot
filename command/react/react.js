@@ -12,12 +12,10 @@ const info = {
 };
 
 const action = async (message, args) => {
-  // TODO: With default command it is never empty
-  console.log(args);
   tryDelete(message);
   if (args.length <= 0) {
-    // TODO: Send it in PM
-    message.channel.send('No shortcut selected');
+    const dm = await message.author.createDM();
+    dm.send('No shortcut selected');
   }
   const messages = await message.channel.messages.fetch({ limit: 2 });
   const lastMessage = messages.last();
