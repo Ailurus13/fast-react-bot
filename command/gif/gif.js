@@ -21,24 +21,29 @@ const action = async (message, args) => {
   const reaction = getShortcut(message.author.id, type);
   if (reaction) {
     const emojis = reaction.emojis;
-    // const messages = await message.channel.messages.fetch({ limit: 2 });
     const gifMessage = await message.channel.send(emojis[0]);
     fullMessage += message.author.toString() + ' : ' + emojis[0] + ' ';
     tryDelete(message);
-    for (let i = 1; i < emojis.length; i++) {
-      gifMessage.author.client.setTimeout(() => {
-        updateGif(gifMessage, emojis[i]);
-      }, process.env.GIF_TIMER * i);
-      fullMessage += emojis[i] + ' ';
-    }
     gifMessage.author.client.setTimeout(() => {
-      updateGif(gifMessage, fullMessage);
-    }, process.env.GIF_TIMER * emojis.length);
+      updateGif(gifMessage, emojis, 1);
+    }, process.env.GIF_TIMER);
   }
 };
 
-const updateGif = (message, emoji) => {
-  message.edit(emoji);
+const updateGif = (message, emojis, index) => {
+  message.edit(emojis[index]);
+  fullMessage += emojis[index] + ' ';
+  index++;
+  if (index < emojis.length) {
+    message.author.client.setTimeout(() => {
+      updateGif(message, emojis, index);
+    }, process.env.GIF_TIMER);
+  } else {
+    message.author.client.setTimeout(() => {
+      message.edit(fullMessage);
+      fullMessage = '';
+    }, process.env.GIF_TIMER);
+  }
 };
 
 module.exports = {
