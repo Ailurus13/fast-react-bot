@@ -7,11 +7,13 @@ const {
   getShortcut
 } = require('../../lib/shortcuts');
 
+let fullMessage = '';
+
 const info = {
   name: 'Gif',
   command: 'gif',
   args: 'type *',
-  description: 'Give informations about all commands'
+  description: 'Send all emojis one after the other'
 };
 
 const action = async (message, args) => {
@@ -21,12 +23,17 @@ const action = async (message, args) => {
     const emojis = reaction.emojis;
     // const messages = await message.channel.messages.fetch({ limit: 2 });
     const gifMessage = await message.channel.send(emojis[0]);
+    fullMessage += message.author.toString() + ' : ' + emojis[0] + ' ';
     tryDelete(message);
     for (let i = 1; i < emojis.length; i++) {
       gifMessage.author.client.setTimeout(() => {
         updateGif(gifMessage, emojis[i]);
       }, process.env.GIF_TIMER * i);
+      fullMessage += emojis[i] + ' ';
     }
+    gifMessage.author.client.setTimeout(() => {
+      updateGif(gifMessage, fullMessage);
+    }, process.env.GIF_TIMER * emojis.length);
   }
 };
 
