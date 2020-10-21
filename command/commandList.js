@@ -8,7 +8,7 @@ const gif = require('./gif/gif');
 const list = require('./list/list');
 
 // Commands
-const commands = [write, clean, react, create, list,gif];
+const commands = [write, clean, react, create, list, gif];
 const defaultCommand = react;
 
 // Register commands if they are compliant
