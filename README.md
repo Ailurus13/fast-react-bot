@@ -13,6 +13,7 @@ Create a .env file at the root of the project
 ```
 TOKEN=your_discord_token
 PREFIX=!fr
+GIF_TIMER=1500
 ```
 
 Run the bot using
