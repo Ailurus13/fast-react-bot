@@ -12,16 +12,23 @@ const info = {
 };
 
 const action = async (message, args) => {
-  const type = args[0];
-  // Merge default shortcuts with custom shortcuts
+  // TODO: With default command it is never empty
+  console.log(args);
+  tryDelete(message);
+  if (args.length <= 0) {
+    // TODO: Send it in PM
+    message.channel.send('No shortcut selected');
+  }
+  const messages = await message.channel.messages.fetch({ limit: 2 });
+  const lastMessage = messages.last();
   const allShortcuts = [...defaultReact, ...shortcuts.getAllByUser(message.author.id)];
-  const reaction = allShortcuts.find((c) => c.name === type);
-  if (reaction) {
-    const messages = await message.channel.messages.fetch({ limit: 2 });
-    tryDelete(message);
-    const lastMessage = messages.last();
-    for (const e of reaction.emojis) {
-      await lastMessage.react(e);
+  for (const type of args) {
+    // Merge default shortcuts with custom shortcuts
+    const reaction = allShortcuts.find((c) => c.name === type);
+    if (reaction) {
+      for (const e of reaction.emojis) {
+        await lastMessage.react(e);
+      }
     }
   }
 };
