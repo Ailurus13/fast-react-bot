@@ -11,14 +11,19 @@ const info = {
 };
 
 const action = async (message, args) => {
-  const type = args[0];
-  const reaction = shortcuts.getShortcut(message.author.id, type);
-  if (reaction) {
-    const messages = await message.channel.messages.fetch({ limit: 2 });
-    tryDelete(message);
-    const lastMessage = messages.last();
-    for (const e of reaction.emojis) {
-      await lastMessage.react(e);
+  tryDelete(message);
+  if (args.length <= 0) {
+    const dm = await message.author.createDM();
+    dm.send('No shortcut selected');
+  }
+  const messages = await message.channel.messages.fetch({ limit: 2 });
+  const lastMessage = messages.last();
+  for (const type of args) {
+    const reaction = shortcuts.getShortcut(message.author.id, type);
+    if (reaction) {
+      for (const e of reaction.emojis) {
+        await lastMessage.react(e);
+      }
     }
   }
 };

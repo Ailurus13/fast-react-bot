@@ -26,7 +26,9 @@ module.exports = (message) => {
     const defaultAction = defaultCommand ? defaultCommand.action : null;
     if (defaultAction) {
       // Args of default action is the command name
-      defaultAction(message, [command]);
+      // The command value can be empty string '', we need to avoid it
+      const newArgs = command ? [command, ...args] : [...args];
+      defaultAction(message, newArgs);
     } else {
       console.log('No default action implemented');
     }
