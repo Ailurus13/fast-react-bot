@@ -19,7 +19,7 @@ const action = async (message, args) => {
   const messages = await message.channel.messages.fetch({ limit: 2 });
   const lastMessage = messages.last();
   for (const type of args) {
-    // Merge default shortcuts with custom shortcuts
+    
     const reaction = shortcuts.getShortcut(message.author.id, type);
     if (reaction) {
       for (const e of reaction.emojis) {
