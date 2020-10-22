@@ -1,7 +1,7 @@
 'use strict';
 
 const { tryDelete } = require('../../lib/discordjs-utils');
-const { deleteShortcut, getShortcut } = require('../../lib/shortcuts');
+const { deleteShortcut } = require('../../lib/shortcuts');
 
 const info = {
   name: 'Delete',
@@ -16,10 +16,6 @@ const action = async (message, args) => {
   const author = message.author;
   if (!name) {
     dm.send('Error: No name provided');
-    return;
-  }
-  if (!getShortcut(author.id, name)) {
-    dm.send(`Error: No shortcut corresponding to ${name}`);
     return;
   }
   tryDelete(message);
