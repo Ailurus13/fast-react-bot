@@ -14,8 +14,9 @@ const action = async (message, args) => {
   const messages = await message.channel.messages.fetch({ limit: 2 });
   tryDelete(message);
   const lastMessage = messages.last();
-  const mot = args[0];
-  for (const c of mot) {
+  const mot = args[0]
+  const motLower = mot.toLowerCase();
+  for (const c of motLower) {
     lastMessage.react(unicodeAlphabet[c]);
   }
 };
