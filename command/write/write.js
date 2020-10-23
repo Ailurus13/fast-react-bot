@@ -15,7 +15,8 @@ const action = async (message, args) => {
   tryDelete(message);
   const lastMessage = messages.last();
   const mot = args[0];
-  for (const c of mot) {
+  const motLower = mot.toLowerCase();
+  for (const c of motLower) {
     lastMessage.react(unicodeAlphabet[c]);
   }
 };
