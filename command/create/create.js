@@ -2,6 +2,7 @@
 
 const { tryDelete } = require('../../lib/discordjs-utils');
 const { addShortcut } = require('../../lib/shortcuts');
+const isUnicode = require('../../lib/isUnicode');
 
 const info = {
   name: 'Create',
@@ -11,40 +12,55 @@ const info = {
 };
 
 const action = async (message, args) => {
-  const name = args[0];
+  const name = args.shift();
   const dm = await message.author.createDM();
   const author = message.author;
+
+  // No shortcut name
   if (!name) {
     dm.send('Error: No name provided');
     return;
   }
 
-  const formMessage = await dm.send(
-    'React with the emojies you would like to add to your shortcut'
-  );
+  // Delete command message if possible
   tryDelete(message);
 
-  // Récupération des emotes (60 secondes pour le faire)
-  try {
-    const collected = await formMessage.awaitReactions(
-      () => {
-        return true;
-      },
-      { time: 60000 }
-    );
-    const emojis = collected
-      .array()
-      .map((messageReaction) => messageReaction.emoji.name);
-    if (emojis.length <= 0) {
-      dm.send('Error: No emoji provided');
-      return;
+  if (args.length > 0) {
+    const emojis = args.filter(isUnicode);
+    try {
+      await addEmojis(dm, name, author, emojis);
+    } catch (e) {
+      await dm.send(`Error while creating your shortcut ! (${e})`);
     }
-    addShortcut(author.id, name, emojis);
-    await dm.send(`Shortcut created with name : ${name}`);
-  } catch (e) {
-    await dm.send(`Error while creating your shortcut ! (${e})`);
+  } else {
+    const formMessage = await dm.send(
+      'React with the emojies you would like to add to your shortcut'
+    );
+
+    // Emote recuperation (60s to do so)
+    try {
+      const collected = await formMessage.awaitReactions(() => true, {
+        time: 60000
+      });
+      const emojis = collected
+        .array()
+        .map((messageReaction) => messageReaction.emoji.name);
+      await addEmojis(dm, name, author, emojis);
+    } catch (e) {
+      await dm.send(`Error while creating your shortcut ! (${e})`);
+    }
   }
 };
+
+// Verify non empty arr and add shortcut
+async function addEmojis (dm, name, author, emojis) {
+  if (emojis.length <= 0) {
+    dm.send('Error: No emojis provided');
+    return;
+  }
+  addShortcut(author.id, name, emojis);
+  await dm.send(`Shortcut created :\n${name} : ${emojis.join(' ')}`);
+}
 
 module.exports = {
   info,
