@@ -6,9 +6,10 @@ const react = require('./react/react');
 const create = require('./create/create');
 const gif = require('./gif/gif');
 const list = require('./list/list');
+const del = require('./delete/delete');
 
 // Commands
-const commands = [write, clean, react, create, list, gif];
+const commands = [write, clean, react, create, list, gif, del];
 const defaultCommand = react;
 
 // Register commands if they are compliant
