@@ -12,8 +12,8 @@ const info = {
 
 const action = async (message, args) => {
   tryDelete(message);
+  const dm = await message.author.createDM();
   if (args.length <= 0) {
-    const dm = await message.author.createDM();
     dm.send('No shortcut selected');
   }
   const messages = await message.channel.messages.fetch({ limit: 2 });
@@ -24,6 +24,8 @@ const action = async (message, args) => {
       for (const e of reaction.emojis) {
         await lastMessage.react(e);
       }
+    } else {
+      dm.send(`No shurtcut corresponding to '${type}'`);
     }
   }
 };
