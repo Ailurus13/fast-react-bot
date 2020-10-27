@@ -1,6 +1,6 @@
 'use strict';
 
-const { tryDelete } = require('../../lib/discordjs-utils');
+const { tryDelete, sendDM } = require('../../lib/discordjs-utils');
 const { commands } = require('../commandList');
 
 const info = {
@@ -19,8 +19,7 @@ const action = async (message) => {
         (${c.info.args || 'none'})`
     )
     .join('\n');
-  const dm = await message.author.createDM();
-  dm.send('```' + helpText + '```');
+  await sendDM('```' + helpText + '```', message);
   tryDelete(message);
 };
 

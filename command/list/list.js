@@ -1,7 +1,7 @@
 'use strict';
 
 const { getAllByUser } = require('../../lib/shortcuts');
-const { error } = require('../../lib/discordjs-utils');
+const { sendDM } = require('../../lib/discordjs-utils');
 
 const info = {
   name: 'List',
@@ -19,10 +19,10 @@ const action = async (message) => {
       // Can't use markdown for style, it does not handle emojis very good
       message.channel.send('[' + author.username + ']\n' + stringShortcut);
     } else {
-      error(`Your shortcuts list is now empty.\nUse _${process.env.PREFIX} create_ to create a shortcut !`, message);
+      sendDM(`Your shortcuts list is now empty.\nUse _${process.env.PREFIX} create_ to create a shortcut !`, message);
     }
   } catch (e) {
-    error(
+    sendDM(
       `An error occured, maybe you never created a shortcut.\nUse _${process.env.PREFIX} create_ to create a shortcut !`,
       message
     );
