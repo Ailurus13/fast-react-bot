@@ -1,6 +1,6 @@
 'use strict';
 
-const { tryDelete } = require('../../lib/discordjs-utils');
+const { tryDelete, error } = require('../../lib/discordjs-utils');
 const { addShortcut } = require('../../lib/shortcuts');
 const isUnicode = require('../../lib/isUnicode');
 
@@ -18,7 +18,7 @@ const action = async (message, args) => {
 
   // No shortcut name
   if (!name) {
-    dm.send('Error: No name provided');
+    error('Error: No name provided', message);
     return;
   }
 
@@ -30,7 +30,7 @@ const action = async (message, args) => {
     try {
       await addEmojis(dm, name, author, emojis);
     } catch (e) {
-      await dm.send(`Error while creating your shortcut ! (${e})`);
+      await error(`Error while creating your shortcut ! (${e})`, message);
     }
   } else {
     const formMessage = await dm.send(
@@ -47,7 +47,7 @@ const action = async (message, args) => {
         .map((messageReaction) => messageReaction.emoji.name);
       await addEmojis(dm, name, author, emojis);
     } catch (e) {
-      await dm.send(`Error while creating your shortcut ! (${e})`);
+      await error(`Error while creating your shortcut ! (${e})`, message);
     }
   }
 };
