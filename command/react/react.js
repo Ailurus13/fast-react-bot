@@ -1,7 +1,7 @@
 'use strict';
 
 const shortcuts = require('../../lib/shortcuts');
-const { tryDelete } = require('../../lib/discordjs-utils');
+const { tryDelete, sendDM } = require('../../lib/discordjs-utils');
 
 const info = {
   name: 'React',
@@ -11,13 +11,12 @@ const info = {
 };
 
 const action = async (message, args) => {
-  tryDelete(message);
-  const dm = await message.author.createDM();
   if (args.length <= 0) {
-    dm.send('No shortcut selected');
+    sendDM('No shortcut selected', message);
   }
   const messages = await message.channel.messages.fetch({ limit: 2 });
   const lastMessage = messages.last();
+  tryDelete(message);
   for (const type of args) {
     const reaction = shortcuts.getShortcut(message.author.id, type);
     if (reaction) {
@@ -25,7 +24,7 @@ const action = async (message, args) => {
         await lastMessage.react(e);
       }
     } else {
-      dm.send(`No shurtcut corresponding to '${type}'`);
+      sendDM(`No shurtcut corresponding to '${type}'`, message);
     }
   }
 };

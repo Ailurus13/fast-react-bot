@@ -1,7 +1,8 @@
 'use strict';
 
 const {
-  tryDelete
+  tryDelete,
+  sendDM
 } = require('../../lib/discordjs-utils');
 const {
   getShortcut
@@ -27,6 +28,8 @@ const action = async (message, args) => {
     gifMessage.author.client.setTimeout(() => {
       updateGif(gifMessage, emojis, 1);
     }, process.env.GIF_TIMER);
+  } else {
+    await sendDM(`No shortcut find with the name ${type}`, message);
   }
 };
 

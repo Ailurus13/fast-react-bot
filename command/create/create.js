@@ -1,6 +1,6 @@
 'use strict';
 
-const { tryDelete } = require('../../lib/discordjs-utils');
+const { tryDelete, sendDM } = require('../../lib/discordjs-utils');
 const { addShortcut } = require('../../lib/shortcuts');
 const isUnicode = require('../../lib/isUnicode');
 
@@ -13,12 +13,11 @@ const info = {
 
 const action = async (message, args) => {
   const name = args.shift();
-  const dm = await message.author.createDM();
   const author = message.author;
 
   // No shortcut name
   if (!name) {
-    dm.send('Error: No name provided');
+    sendDM('Error: No name provided', message);
     return;
   }
 
@@ -28,13 +27,14 @@ const action = async (message, args) => {
   if (args.length > 0) {
     const emojis = args.filter(isUnicode);
     try {
-      await addEmojis(dm, name, author, emojis);
+      await addEmojis(message, name, author, emojis);
     } catch (e) {
-      await dm.send(`Error while creating your shortcut ! (${e})`);
+      await sendDM(`Error while creating your shortcut ! (${e})`, message);
     }
   } else {
-    const formMessage = await dm.send(
-      'React with the emojies you would like to add to your shortcut'
+    const formMessage = await sendDM(
+      'React with the emojies you would like to add to your shortcut',
+      message
     );
 
     // Emote recuperation (60s to do so)
@@ -45,21 +45,21 @@ const action = async (message, args) => {
       const emojis = collected
         .array()
         .map((messageReaction) => messageReaction.emoji.name);
-      await addEmojis(dm, name, author, emojis);
+      await addEmojis(message, name, author, emojis);
     } catch (e) {
-      await dm.send(`Error while creating your shortcut ! (${e})`);
+      await sendDM(`Error while creating your shortcut ! (${e})`, message);
     }
   }
 };
 
 // Verify non empty arr and add shortcut
-async function addEmojis (dm, name, author, emojis) {
+async function addEmojis (message, name, author, emojis) {
   if (emojis.length <= 0) {
-    dm.send('Error: No emojis provided');
+    sendDM('Error: No emojis provided', message);
     return;
   }
   addShortcut(author.id, name, emojis);
-  await dm.send(`Shortcut created :\n${name} : ${emojis.join(' ')}`);
+  await sendDM(`Shortcut created :\n${name} : ${emojis.join(' ')}`, message);
 }
 
 module.exports = {
