@@ -7,9 +7,10 @@ const create = require('./create/create');
 const gif = require('./gif/gif');
 const list = require('./list/list');
 const del = require('./delete/delete');
+const catchou = require('./catchou/catchou');
 
 // Commands
-const commands = [write, clean, react, create, list, gif, del];
+const commands = [write, clean, react, create, list, gif, del, catchou];
 const defaultCommand = react;
 
 // Register commands if they are compliant
