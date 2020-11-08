@@ -11,7 +11,7 @@ const update = require('./update/update');
 const catchou = require('./catchou/catchou');
 
 // Commands
-const commands = [write, clean, react, create,  update, del, list, gif, catchou];
+const commands = [write, clean, react, create, update, del, list, gif, catchou];
 const defaultCommand = react;
 
 // Register commands if they are compliant
