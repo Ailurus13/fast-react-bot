@@ -6,7 +6,7 @@ const info = {
   name: 'catchou',
   command: 'catchou',
   args: 'none',
-  description: 'Surprise M*&#F!~?'
+  description: 'egg'
 };
 
 const action = async (message, args) => {

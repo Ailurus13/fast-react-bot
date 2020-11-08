@@ -12,7 +12,9 @@ const info = {
 
 const action = async (message) => {
   const fullCommands = [{ info }, ...commands];
+
   const helpText = fullCommands
+    .filter(c => c.info.description !== 'egg')
     .map(
       (c) =>
         `${process.env.PREFIX} ${c.info.command} : ${c.info.name} - ${c.info.description} 
