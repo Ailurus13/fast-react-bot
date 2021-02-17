@@ -2,6 +2,7 @@
 
 const { tryDelete, sendDM } = require('../../lib/discordjs-utils');
 const { addShortcut } = require('../../lib/shortcuts');
+const { isCustomEmoji } = require('../../lib/custom-emojis');
 const isUnicode = require('../../lib/isUnicode');
 
 const info = {
@@ -25,7 +26,7 @@ const action = async (message, args) => {
   tryDelete(message);
 
   if (args.length > 0) {
-    const emojis = args.filter(isUnicode);
+    const emojis = args;
     try {
       await addEmojis(message, name, author, emojis);
     } catch (e) {
@@ -58,8 +59,13 @@ async function addEmojis (message, name, author, emojis) {
     sendDM('Error: No emojis provided', message);
     return;
   }
-  addShortcut(author.id, name, emojis);
-  await sendDM(`Shortcut created :\n${name} : ${emojis.join(' ')}`, message);
+  // Filter valid emojis
+  const addedEmojis = emojis.filter((e) => isCustomEmoji(e) || isUnicode(e));
+  addShortcut(author.id, name, addedEmojis);
+  await sendDM(
+    `Shortcut created :\n${name} : ${addedEmojis.join(' ')}`,
+    message
+  );
 }
 
 module.exports = {
