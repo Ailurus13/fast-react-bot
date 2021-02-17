@@ -2,6 +2,7 @@
 
 const shortcuts = require('../../lib/shortcuts');
 const { tryDelete, sendDM } = require('../../lib/discordjs-utils');
+const { isCustomEmoji, getCustomEmojiId } = require('../../lib/custom-emojis');
 
 const info = {
   name: 'React',
@@ -21,7 +22,11 @@ const action = async (message, args) => {
     const reaction = shortcuts.getShortcut(message.author.id, type);
     if (reaction) {
       for (const e of reaction.emojis) {
-        await lastMessage.react(e);
+        if (isCustomEmoji(e)) {
+          await lastMessage.react(getCustomEmojiId(e));
+        } else {
+          await lastMessage.react(e);
+        }
       }
     } else {
       sendDM(`No shurtcut corresponding to '${type}'`, message);
